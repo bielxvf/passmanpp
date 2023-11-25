@@ -1,7 +1,10 @@
 #include "./passman.hpp"
 #include <cxxopts.hpp>
+#include <iostream>
+#include <cstdlib>
 
 int main(int argc, char **argv) {
+
   cxxopts::Options options("passman", "Simple password manager");
 
   options.add_options()
@@ -12,6 +15,10 @@ int main(int argc, char **argv) {
   auto args = options.parse(argc, argv);
 
   DEBUG = args["debug"].as<bool>();
+
+  std::string pass_dir;
+  init_pass_dir_path(pass_dir);
+
 
   if (args.count("help")) {
     std::cout << options.help() << std::endl;
