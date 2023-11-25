@@ -81,3 +81,12 @@ void create_pass_dir(std::string pass_dir) {
     dbgln("Created '", pass_dir, "' successfully");
   }
 }
+
+void create_new_password(std::string pass_dir, std::string pass_name) {
+  if (!std::filesystem::exists(pass_dir + pass_name)) {
+    // TODO
+  } else {
+    print_error("'", pass_dir + pass_name, "' already exists");
+    exit(EXIT_FAILURE);
+  }
+}

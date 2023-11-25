@@ -11,6 +11,7 @@ int main(int argc, char **argv) {
     ("h,help", "Print usage")
     ("v,version", "Print version")
     ("d,debug", "Print debugging info", cxxopts::value<bool>()->default_value("false"))
+    ("n,new", "Create a new password", cxxopts::value<std::string>())
     ;
   auto args = options.parse(argc, argv);
 
@@ -26,6 +27,10 @@ int main(int argc, char **argv) {
   } else if (args.count("version")) {
     print_version();
     exit(EXIT_SUCCESS);
+  } else if (args.count("new")) {
+    std::string pass_name = args["new"].as<std::string>();
+    dbgln("Pass name: ", pass_name);
+    create_new_password(pass_dir, pass_name);
   } else {
     // No valid option was given
     print_error("No option given, printing help");
