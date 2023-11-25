@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 
   std::string pass_dir;
   init_pass_dir_path(pass_dir);
-
+  create_pass_dir(pass_dir);
 
   if (args.count("help")) {
     std::cout << options.help() << std::endl;

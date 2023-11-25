@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <filesystem>
 
 static const float VERSION = 0.1;
 bool DEBUG;
@@ -59,5 +60,18 @@ void init_pass_dir_path(std::string &pass_dir) {
       print_error("No $USER env variable found");
       exit(EXIT_FAILURE);
     }
+  }
+}
+
+void create_pass_dir(std::string pass_dir) {
+  if(!std::filesystem::create_directories(pass_dir)) {
+    if (std::filesystem::is_directory(pass_dir)) {
+      dbgln("'", pass_dir, "' already exists");
+    } else {
+      print_error("Failed to create directory '", pass_dir, "'");
+      exit(EXIT_FAILURE);
+    }
+  } else {
+    dbgln("Created '", pass_dir, "' successfully");
   }
 }
