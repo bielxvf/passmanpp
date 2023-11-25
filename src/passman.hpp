@@ -1,13 +1,19 @@
 #pragma once
 #include <iostream>
 #include <filesystem>
+#include "./colors.hpp"
+
+Color::Modifier c_red(Color::FG_RED);
+Color::Modifier c_yel(Color::FG_YELLOW);
+Color::Modifier c_res(Color::FG_DEFAULT);
+Color::Modifier c_bold(Color::BOLD);
 
 static const float VERSION = 0.1;
 bool DEBUG;
 
 template <typename T>
 void print_error(T t) {
-  std::cerr << t << " <-- ERROR" << std::endl;
+  std::cerr << t << c_red << c_bold << " <-- ERROR" << c_res << std::endl;
 }
 
 template <typename T, typename... Args>
@@ -19,7 +25,7 @@ void print_error(T t, Args... args) {
 template <typename T>
 void dbgln(T t) {
   if (DEBUG) {
-    std::cerr << t << " <-- DEBUG" << std::endl;
+    std::cerr << t << c_yel << c_bold << " <-- DEBUG" << c_res << std::endl;
   }
 }
 
