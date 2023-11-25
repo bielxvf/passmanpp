@@ -5,7 +5,7 @@
 
 Color::Modifier c_red(Color::FG_RED);
 Color::Modifier c_yel(Color::FG_YELLOW);
-Color::Modifier c_res(Color::FG_DEFAULT);
+Color::Modifier c_res(Color::RESET);
 Color::Modifier c_bold(Color::BOLD);
 
 static const float VERSION = 0.1;
