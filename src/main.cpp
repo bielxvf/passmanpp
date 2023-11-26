@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
     std::string pass_name = args["new"].as<std::string>();
     dbgln("Pass name: ", pass_name);
     create_new_password(pass_dir, pass_name);
+    exit(EXIT_SUCCESS);
   } else {
     // No valid option was given
     print_error("No option given, printing help");
