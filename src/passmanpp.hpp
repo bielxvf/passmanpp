@@ -87,11 +87,11 @@ void create_pass_dir(std::string pass_dir) {
 void create_new_password(std::string pass_dir, std::string pass_name) {
   std::string password_path = pass_dir + pass_name;
   if (!std::filesystem::exists(password_path)) {
-    Password new_password;
     std::string password, master_password;
     std::cout << "Enter new password: ";
     std::cin >> password; // TODO: Hide input on terminal screen
-    new_password.set(password);
+    Password new_password(password);
+    //new_password.set(password);
     dbgln("Password input: ", new_password.value());
 
     std::cout << "Enter Master password: ";

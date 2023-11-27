@@ -1,10 +1,12 @@
+#include <cryptopp/rijndael.h>
+
 class Password {
 private:
   std::string password;
   std::string password_encrypted;
 
 public:
-  void set(std::string pwd) {
+  Password(std::string pwd) {
     this->password = pwd;
   }
 
