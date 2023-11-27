@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 #include "./colors.hpp"
+#include "./password.hpp"
 
 Color::Modifier c_red(Color::FG_RED);
 Color::Modifier c_yel(Color::FG_YELLOW);
@@ -83,8 +85,24 @@ void create_pass_dir(std::string pass_dir) {
 }
 
 void create_new_password(std::string pass_dir, std::string pass_name) {
-  if (!std::filesystem::exists(pass_dir + pass_name)) {
-    // TODO
+  std::string password_path = pass_dir + pass_name;
+  if (!std::filesystem::exists(password_path)) {
+    Password new_password;
+    std::string password, master_password;
+    std::cout << "Enter new password: ";
+    std::cin >> password; // TODO: Hide input on terminal screen
+    new_password.set(password);
+    dbgln("Password input: ", new_password.value());
+
+    std::cout << "Enter Master password";
+    std::cin >> master_password; // TODO: Hide input on terminal screen
+    new_password.encrypt(master_password);
+    dbgln("Encrypted: ", new_password.value());
+
+    std::ofstream password_file;
+    password_file.open(password_path);
+    password_file << new_password.value();
+    password_file.close();
   } else {
     print_error("'", pass_dir + pass_name, "' already exists");
     exit(EXIT_FAILURE);
