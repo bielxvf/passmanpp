@@ -1,6 +1,7 @@
 class Password {
 private:
   std::string password;
+  std::string password_encrypted;
 
 public:
   void set(std::string pwd) {
@@ -11,13 +12,17 @@ public:
     return this->password;
   }
 
+  std::string value_encrypted(void) {
+    return this->password_encrypted;
+  }
+
   void encrypt(std::string master_password) {
     // TODO
-    this->password += ":" + master_password;
+    this->password_encrypted = this->password + ":" + master_password;
   }
 
   void decrypt(std::string master_password) {
     // TODO
-    this->password += ":This was decrypted";
+    this->password = this->password_encrypted + ":This was decrypted";
   }
 };

@@ -94,14 +94,14 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     new_password.set(password);
     dbgln("Password input: ", new_password.value());
 
-    std::cout << "Enter Master password";
+    std::cout << "Enter Master password: ";
     std::cin >> master_password; // TODO: Hide input on terminal screen
     new_password.encrypt(master_password);
-    dbgln("Encrypted: ", new_password.value());
+    dbgln("Encrypted: ", new_password.value_encrypted());
 
     std::ofstream password_file;
     password_file.open(password_path);
-    password_file << new_password.value();
+    password_file << new_password.value_encrypted();
     password_file.close();
   } else {
     print_error("'", pass_dir + pass_name, "' already exists");
