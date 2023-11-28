@@ -88,21 +88,23 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
   std::string password_path = pass_dir + pass_name;
   if (!std::filesystem::exists(password_path)) {
     std::string password, master_password;
-    std::cout << "Enter new password: ";
+    std::cout << "New password: ";
     std::cin >> password; // TODO: Hide input on terminal screen
-    Password new_password(password);
-    //new_password.set(password);
-    dbgln("Password input: ", new_password.value());
 
-    std::cout << "Enter Master password: ";
+
+    std::cout << "Master password: ";
     std::cin >> master_password; // TODO: Hide input on terminal screen
-    new_password.encrypt(master_password);
-    dbgln("Encrypted: ", new_password.value_encrypted());
+
+    Password *pnew_password = new Password(password);
+    pnew_password->encrypt(master_password);
 
     std::ofstream password_file;
     password_file.open(password_path);
-    password_file << new_password.value_encrypted();
+    password_file << pnew_password->value_encrypted();
     password_file.close();
+
+    delete pnew_password;
+
   } else {
     print_error("'", pass_dir + pass_name, "' already exists");
     exit(EXIT_FAILURE);

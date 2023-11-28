@@ -1,4 +1,4 @@
-#include <cryptopp/rijndael.h>
+#include <iostream>
 
 class Password {
 private:
@@ -19,8 +19,6 @@ public:
   }
 
   void encrypt(std::string master_password) {
-    // TODO
-    this->password_encrypted = this->password + ":" + master_password;
   }
 
   void decrypt(std::string master_password) {
