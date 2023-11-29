@@ -1,7 +1,7 @@
 #pragma once
-#include <iostream>
 #include "./colors.hpp"
 #include "./password.hpp"
+#include <iostream>
 
 Color::Modifier c_red(Color::FG_RED);
 Color::Modifier c_yel(Color::FG_YELLOW);
@@ -11,35 +11,29 @@ Color::Modifier c_bold(Color::BOLD);
 static const float VERSION = 0.1;
 bool DEBUG;
 
-template <typename T>
-void print_error(T t) {
+template <typename T> void print_error(T t) {
   std::cerr << t << c_red << c_bold << " <-- ERROR" << c_res << std::endl;
 }
 
-template <typename T, typename... Args>
-void print_error(T t, Args... args) {
+template <typename T, typename... Args> void print_error(T t, Args... args) {
   std::cerr << t;
   print_error(args...);
 }
 
-template <typename T>
-void dbgln(T t) {
+template <typename T> void dbgln(T t) {
   if (DEBUG) {
     std::cerr << t << c_yel << c_bold << " <-- DEBUG" << c_res << std::endl;
   }
 }
 
-template <typename T, typename... Args>
-void dbgln(T t, Args... args) {
+template <typename T, typename... Args> void dbgln(T t, Args... args) {
   if (DEBUG) {
     std::cerr << t;
     dbgln(args...);
   }
 }
 
-void print_version(void) {
-  std::cout << VERSION << std::endl;
-}
+void print_version(void) { std::cout << VERSION << std::endl; }
 
 #define PROGRAM_NAME "passmanpp"
 
@@ -61,8 +55,8 @@ void init_pass_dir_path(std::string &pass_dir) {
       dbgln("pass_dir", pass_dir);
 
     } else {
-      // If neither $HOME nor $USER have a value, crash the program, since we can't
-      // safely assume the correct path to the config dir
+      // If neither $HOME nor $USER have a value, crash the program, since we
+      // can't safely assume the correct path to the config dir
       print_error("No $USER env variable found");
       exit(EXIT_FAILURE);
     }
@@ -70,7 +64,7 @@ void init_pass_dir_path(std::string &pass_dir) {
 }
 
 void create_pass_dir(std::string pass_dir) {
-  if(!std::filesystem::create_directories(pass_dir)) {
+  if (!std::filesystem::create_directories(pass_dir)) {
     if (std::filesystem::is_directory(pass_dir)) {
       dbgln("'", pass_dir, "' already exists");
     } else {
@@ -89,7 +83,6 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     std::cout << "New password: ";
     std::cin >> password; // TODO: Hide input on terminal screen
 
-
     std::cout << "Master password: ";
     std::cin >> master_password; // TODO: Hide input on terminal screen
 
@@ -101,7 +94,8 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     delete pnew_password;
 
   } else {
-    print_error("Password named '", pass_name, "' already exists at '", password_path + FILE_EXTENSION, "'");
+    print_error("Password named '", pass_name, "' already exists at '",
+                password_path + FILE_EXTENSION, "'");
     exit(EXIT_FAILURE);
   }
 }

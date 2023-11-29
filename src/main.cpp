@@ -1,18 +1,16 @@
 #include "./passmanpp.hpp"
+#include <cstdlib>
 #include <cxxopts.hpp>
 #include <iostream>
-#include <cstdlib>
 
 int main(int argc, char **argv) {
 
   cxxopts::Options options("passmanpp", "Simple password manager");
 
-  options.add_options()
-    ("h,help", "Print usage")
-    ("v,version", "Print version")
-    ("d,debug", "Print debugging info", cxxopts::value<bool>()->default_value("false"))
-    ("n,new", "Create a new password", cxxopts::value<std::string>())
-    ;
+  options.add_options()("h,help", "Print usage")("v,version", "Print version")(
+      "d,debug", "Print debugging info",
+      cxxopts::value<bool>()->default_value("false"))(
+      "n,new", "Create a new password", cxxopts::value<std::string>());
   auto args = options.parse(argc, argv);
 
   DEBUG = args["debug"].as<bool>();
