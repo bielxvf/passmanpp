@@ -25,6 +25,7 @@ private:
 
 public:
   Password(std::string pwd) { this->password = pwd; }
+  Password() {}
 
   std::string value(void) { return this->password; }
 
@@ -42,19 +43,29 @@ public:
     plaintext_file << this->password;
     plaintext_file.close();
 
-    std::ofstream encrypted_file;
-    encrypted_file.open(encrypted_path);
-
     CBC_Mode<AES>::Encryption encryptor(key, key_size, iv);
     FileSource(plaintext_path.c_str(), true,
                new StreamTransformationFilter(
                    encryptor, new FileSink(encrypted_path.c_str())));
 
-    encrypted_file.close();
     std::filesystem::remove(plaintext_path);
   }
 
   void decrypt_from_path(std::string master_password) {
-    // TODO
+    unsigned char *key = (unsigned char *)master_password.c_str();
+    unsigned char *iv = (unsigned char *)"0123456789012345";
+    size_t key_size = strlen((const char *)key);
+    std::string encrypted_path = this->path + FILE_EXTENSION;
+    std::string plaintext_path = this->path;
+
+    CBC_Mode<AES>::Decryption decryptor(key, key_size, iv);
+    FileSource(encrypted_path.c_str(), true,
+               new StreamTransformationFilter(
+                   decryptor, new FileSink(plaintext_path.c_str())));
+
+    std::ifstream plaintext_file(plaintext_path);
+    plaintext_file >> this->password;
+    plaintext_file.close();
+    std::filesystem::remove(plaintext_path);
   }
 };

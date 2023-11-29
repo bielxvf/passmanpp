@@ -99,3 +99,21 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     exit(EXIT_FAILURE);
   }
 }
+
+void print_password(std::string pass_dir, std::string pass_name) {
+  std::string password_path = pass_dir + pass_name;
+  if (std::filesystem::exists(password_path + FILE_EXTENSION)) {
+    std::string master_password;
+    std::cout << "Master password: "; // TODO: Hide input on terminal screen
+    std::cin >> master_password;
+
+    Password *ppassword = new Password;
+    ppassword->set_path(password_path);
+    ppassword->decrypt_from_path(master_password);
+    std::cout << ppassword->value() << std::endl;
+    delete ppassword;
+  } else {
+    print_error("Password named '", pass_name, "' does not exist");
+    exit(EXIT_FAILURE);
+  }
+}

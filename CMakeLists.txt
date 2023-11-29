@@ -5,5 +5,3 @@ project(passmanpp)
 
 # add the executable
 add_executable(passmanpp src/main.cpp)
-
-set(CMAKE_CXX_FLAGS "-lcryptopp")
