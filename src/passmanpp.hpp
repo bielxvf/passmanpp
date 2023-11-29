@@ -84,7 +84,7 @@ void create_pass_dir(std::string pass_dir) {
 
 void create_new_password(std::string pass_dir, std::string pass_name) {
   std::string password_path = pass_dir + pass_name;
-  if (!std::filesystem::exists(password_path)) {
+  if (!std::filesystem::exists(password_path + FILE_EXTENSION)) {
     std::string password, master_password;
     std::cout << "New password: ";
     std::cin >> password; // TODO: Hide input on terminal screen
@@ -101,7 +101,7 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     delete pnew_password;
 
   } else {
-    print_error("'", pass_dir + pass_name, "' already exists");
+    print_error("Password named '", pass_name, "' already exists at '", password_path + FILE_EXTENSION, "'");
     exit(EXIT_FAILURE);
   }
 }

@@ -44,7 +44,6 @@ public:
     std::string encrypted_path = this->path + FILE_EXTENSION;
 
 
-    // TODO: Check if .enc2 file exists first
     std::string plaintext_path = this->path;
     std::ofstream plaintext_file;
     plaintext_file.open(plaintext_path);
