@@ -18,6 +18,7 @@
 
 using namespace CryptoPP;
 
+namespace passmanpp {
 class Password {
 private:
   std::string path;
@@ -69,3 +70,4 @@ public:
     std::filesystem::remove(plaintext_path);
   }
 };
+}

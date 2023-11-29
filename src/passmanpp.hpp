@@ -8,6 +8,7 @@ Color::Modifier c_yel(Color::FG_YELLOW);
 Color::Modifier c_res(Color::RESET);
 Color::Modifier c_bold(Color::BOLD);
 
+namespace passmanpp {
 static const float VERSION = 0.1;
 bool DEBUG;
 
@@ -63,7 +64,7 @@ void init_pass_dir_path(std::string &pass_dir) {
   }
 }
 
-void create_pass_dir(std::string pass_dir) {
+void create_pass_dir_if_needed(std::string pass_dir) {
   if (!std::filesystem::create_directories(pass_dir)) {
     if (std::filesystem::is_directory(pass_dir)) {
       dbgln("'", pass_dir, "' already exists");
@@ -88,7 +89,7 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
 
     dbgln("Password path: ", password_path);
 
-    Password *pnew_password = new Password(password);
+    passmanpp::Password *pnew_password = new passmanpp::Password(password);
     pnew_password->set_path(password_path);
     pnew_password->encrypt_to_path(master_password);
     delete pnew_password;
@@ -107,7 +108,7 @@ void print_password(std::string pass_dir, std::string pass_name) {
     std::cout << "Master password: "; // TODO: Hide input on terminal screen
     std::cin >> master_password;
 
-    Password *ppassword = new Password;
+    passmanpp::Password *ppassword = new Password;
     ppassword->set_path(password_path);
     ppassword->decrypt_from_path(master_password);
     std::cout << ppassword->value() << std::endl;
@@ -116,4 +117,16 @@ void print_password(std::string pass_dir, std::string pass_name) {
     print_error("Password named '", pass_name, "' does not exist");
     exit(EXIT_FAILURE);
   }
+}
+void list_passwords(std::string pass_dir) {
+  std::string path;
+  std::string filename;
+  std::string base;
+  for (const auto & entry : std::filesystem::directory_iterator(pass_dir)) {
+    path = entry.path();
+    filename = path.substr(path.find_last_of("/") + 1);
+    base = filename.substr(0, filename.find_last_of('.'));
+    std::cout << base << std::endl;
+  }
+}
 }
