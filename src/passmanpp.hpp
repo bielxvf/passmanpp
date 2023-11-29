@@ -1,7 +1,5 @@
 #pragma once
 #include <iostream>
-#include <fstream>
-#include <filesystem>
 #include "./colors.hpp"
 #include "./password.hpp"
 
@@ -95,14 +93,11 @@ void create_new_password(std::string pass_dir, std::string pass_name) {
     std::cout << "Master password: ";
     std::cin >> master_password; // TODO: Hide input on terminal screen
 
+    dbgln("Password path: ", password_path);
+
     Password *pnew_password = new Password(password);
-    pnew_password->encrypt(master_password);
-
-    std::ofstream password_file;
-    password_file.open(password_path);
-    password_file << pnew_password->value_encrypted();
-    password_file.close();
-
+    pnew_password->set_path(password_path);
+    pnew_password->encrypt_to_path(master_password);
     delete pnew_password;
 
   } else {
