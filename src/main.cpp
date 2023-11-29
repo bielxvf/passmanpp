@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv) {
 
-  cxxopts::Options options("passman", "Simple password manager");
+  cxxopts::Options options("passmanpp", "Simple password manager");
 
   options.add_options()
     ("h,help", "Print usage")
