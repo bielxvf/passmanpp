@@ -4,6 +4,7 @@ Heavily inspired by another password manager written in C: `https://github.com/b
 
 # Dependencies
 [cxxopts](https://github.com/jarro2783/cxxopts) to parse command-line arguments, you will need it set up before building
+
 [crypto++](https://cryptopp.com/) to encrypt and decrypt files
 
 
