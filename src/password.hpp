@@ -54,9 +54,6 @@ public:
     std::ofstream encrypted_file;
     encrypted_file.open(encrypted_path);
 
-    std::cout << "Plain: " << plaintext_path << std::endl;
-    std::cout << "Enc2: " << encrypted_path << std::endl;
-
     CBC_Mode<AES>::Encryption encryptor(key, key_size, iv);
     FileSource(plaintext_path.c_str(), true, new StreamTransformationFilter(encryptor, new FileSink(encrypted_path.c_str())));
 
