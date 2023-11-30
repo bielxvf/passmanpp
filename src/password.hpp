@@ -13,12 +13,24 @@
 
 #include <filesystem>
 #include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <openssl/sha.h>
 
 #define FILE_EXTENSION ".enc2"
 
 using namespace CryptoPP;
 
 namespace passmanpp {
+
+void keygen(std::string pwd, unsigned char *key) {
+  SHA256_CTX sha256;
+  SHA256_Init(&sha256);
+  SHA256_Update(&sha256, pwd.c_str(), pwd.size());
+  SHA256_Final(key, &sha256);
+}
+
 class Password {
 private:
   std::string path;
@@ -33,9 +45,11 @@ public:
   void set_path(std::string pth) { this->path = pth; }
 
   void encrypt_to_path(std::string master_password) {
-    unsigned char *key = (unsigned char *)master_password.c_str();
+
+    unsigned char key[32];
+    keygen(master_password, key);
     unsigned char *iv = (unsigned char *)"0123456789012345";
-    size_t key_size = strlen((const char *)key);
+    size_t key_size = 32;
     std::string encrypted_path = this->path + FILE_EXTENSION;
 
     std::string plaintext_path = this->path;
@@ -53,9 +67,10 @@ public:
   }
 
   void decrypt_from_path(std::string master_password) {
-    unsigned char *key = (unsigned char *)master_password.c_str();
+    unsigned char key[32];
+    keygen(master_password, key);
     unsigned char *iv = (unsigned char *)"0123456789012345";
-    size_t key_size = strlen((const char *)key);
+    size_t key_size = 32;
     std::string encrypted_path = this->path + FILE_EXTENSION;
     std::string plaintext_path = this->path;
 
