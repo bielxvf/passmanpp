@@ -18,13 +18,15 @@
 #include <string>
 #include <openssl/sha.h>
 
-#define FILE_EXTENSION ".enc2"
 
 using namespace CryptoPP;
 
+#define FILE_EXTENSION ".enc2"
+#define KEYLEN 32
+
 namespace passmanpp {
 
-void keygen(std::string pwd, unsigned char *key) {
+  void keygen(std::string pwd, unsigned char *key) {
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
   SHA256_Update(&sha256, pwd.c_str(), pwd.size());
@@ -46,10 +48,10 @@ public:
 
   void encrypt_to_path(std::string master_password) {
 
-    unsigned char key[32];
+    unsigned char key[KEYLEN];
     keygen(master_password, key);
     unsigned char *iv = (unsigned char *)"0123456789012345";
-    size_t key_size = 32;
+    size_t key_size = KEYLEN;
     std::string encrypted_path = this->path + FILE_EXTENSION;
 
     std::string plaintext_path = this->path;
@@ -67,10 +69,10 @@ public:
   }
 
   void decrypt_from_path(std::string master_password) {
-    unsigned char key[32];
+    unsigned char key[KEYLEN];
     keygen(master_password, key);
     unsigned char *iv = (unsigned char *)"0123456789012345";
-    size_t key_size = 32;
+    size_t key_size = KEYLEN;
     std::string encrypted_path = this->path + FILE_EXTENSION;
     std::string plaintext_path = this->path;
 

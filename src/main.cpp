@@ -1,7 +1,7 @@
-#include "./passmanpp.hpp"
 #include <cstdlib>
 #include <cxxopts.hpp>
 #include <iostream>
+#include "./passmanpp.hpp"
 
 int main(int argc, char **argv) {
 

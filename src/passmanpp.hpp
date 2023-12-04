@@ -1,4 +1,3 @@
-#pragma once
 #include "./colors.hpp"
 #include "./password.hpp"
 #include <iostream>

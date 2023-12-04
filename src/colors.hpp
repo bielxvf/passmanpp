@@ -1,4 +1,4 @@
-#include <ostream>
+#include <iostream>
 namespace Color {
 enum Code {
   FG_RED = 31,
@@ -22,4 +22,4 @@ public:
     return os << "\033[" << mod.code << "m";
   }
 };
-} // namespace Color
+}
